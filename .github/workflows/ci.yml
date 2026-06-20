@@ -1,0 +1,33 @@
+# Goals: build the docker image and push to the docker hub 
+ci: CI
+
+on: 
+  push:
+    branches: [develop]
+
+jobs:
+  code-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+           python-version: '3.12'
+
+      - name: Docker Setup [Login]
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Docker Build and Push
+        uses: docker/build-push-action@v7
+        with:
+          push: true
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/devboard-fe-master:latest
+
+       
+    
