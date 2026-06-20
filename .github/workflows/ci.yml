@@ -1,5 +1,5 @@
 # Goals: build the docker image and push to the docker hub 
-ci: CI
+name: CI
 
 on: 
   push:
